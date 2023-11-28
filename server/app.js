@@ -4,7 +4,6 @@ const path = require('path');
 const express = require('express');
 const compression = require('compression');
 const favicon = require('serve-favicon');
-// const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
@@ -14,6 +13,7 @@ const RedisStore = require('connect-redis').default;
 const redis = require('redis');
 
 const router = require('./router.js');
+const socketSetup = require('./io.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
@@ -43,7 +43,7 @@ redisClient.connect().then(() => {
     store: new RedisStore({
       client: redisClient,
     }),
-    secret: 'Domo Arigato',
+    secret: 'Discord Arigato',
     resave: false,
     saveUninitialized: false,
   }));
@@ -54,8 +54,9 @@ redisClient.connect().then(() => {
   app.set('views', `${__dirname}/../views`);
 
   router(app);
+  const server = socketSetup(app);
 
-  app.listen(port, (err) => {
+  server.listen(port, (err) => {
     if (err) {
       throw err;
     }

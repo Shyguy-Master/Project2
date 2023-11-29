@@ -1,7 +1,7 @@
 const hostIndex = (req, res) => {
-    res.render('index');
+  res.render('index');
 };
 
 module.exports = {
-    hostIndex,
+  hostIndex,
 };

@@ -34,14 +34,16 @@ const handleDeleteForm = () => {
     });
 };
 
-const displayMessage = (content) => {
+const displayMessage = async (content) => {
     // const messageDiv = document.createElement('div');
     // messageDiv.innerText = content;
     // document.querySelector('.chatList').appendChild(messageDiv);
 
     const channel = document.getElementById('channelSelect').value;
+    const response = await fetch('/getUsername');
+    const username = await response.json();
 
-    helper.sendPostChat("/saveChat", {channel, content}, loadChatFromServer);
+    helper.sendPostChat("/saveChat", {channel, content, username}, loadChatFromServer);
 
     return false;
 };

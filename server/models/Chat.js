@@ -13,6 +13,10 @@ const ChatSchema = new mongoose.Schema({
         required: true,
         ref: 'Account',
     },
+    username: {
+        type: String,
+        require: true,
+    },
     createdDate: {
         type: Date,
         default: Date.now,
@@ -22,6 +26,7 @@ const ChatSchema = new mongoose.Schema({
 ChatSchema.statics.toAPI = (doc) => ({
     channel: doc.channel,
     content: doc.content,
+    username: doc.username,
 });
 
 const ChatModel = mongoose.model('Chat', ChatSchema);

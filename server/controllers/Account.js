@@ -56,9 +56,16 @@ const signup = async (req, res) => {
   }
 };
 
+const getUsername = async (req, res) => {
+  const query = { owner: req.session.account._id };
+  const docs = await Account.find(query).select('username').lean().exec();
+  return res.json({ username: docs });
+};
+
 module.exports = {
   loginPage,
   login,
   logout,
   signup,
+  getUsername,
 };

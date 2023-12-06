@@ -40,10 +40,8 @@ const displayMessage = async (content) => {
     // document.querySelector('.chatList').appendChild(messageDiv);
 
     const channel = document.getElementById('channelSelect').value;
-    const response = await fetch('/getUsername');
-    const username = await response.json();
 
-    helper.sendPostChat("/saveChat", {channel, content, username}, loadChatFromServer);
+    helper.sendPostChat("/saveChat", {channel, content}, loadChatFromServer);
 
     return false;
 };
@@ -60,7 +58,7 @@ const ChatMessage = (props) => {
     const chatMsg = props.chat.map(msg => {
         if (msg.channel === channelSelect.value) {
             return (
-                <div key={msg._id}>{msg.content}</div>
+                <div key={msg._id}>{msg.username} - {msg.content}</div>
             );
         }
 

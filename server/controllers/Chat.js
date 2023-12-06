@@ -17,21 +17,25 @@ const getChat = async (req, res) => {
 };
 
 const saveChat = async (req, res) => {
-  if (!req.body.channel || !req.body.username) {
+  if (!req.body.channel) {
     return res.status(400).json({ error: 'No channel!' });
   }
+
+  console.log(req.body);//
 
   const chatData = {
     channel: req.body.channel,
     content: req.body.content,
     owner: req.session.account._id,
-    username: req.body.username,
+    username: req.session.account.username,
   };
 
   try {
     const newChat = new Chat(chatData);
     await newChat.save();
-    return res.status(201).json({ channel: newChat.channel, content: newChat.content, username: newChat.username });
+    return res.status(201).json(
+      { channel: newChat.channel, content: newChat.content, username: newChat.username },
+    );
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
@@ -46,9 +50,16 @@ const deleteAllChats = async (req, res) => {
   return res.json({ chat: docs });
 };
 
+const deleteMyChats = async (req, res) => {
+  const query = { owner: req.session.account._id };
+  const docs = await Chat.find(query).deleteMany({ channel: req.body.channel });
+  return res.json({ chat: docs });
+};
+
 module.exports = {
   hostIndex,
   getChat,
   saveChat,
   deleteAllChats,
+  deleteMyChats,
 };

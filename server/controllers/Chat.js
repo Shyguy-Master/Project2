@@ -8,7 +8,8 @@ const hostIndex = (req, res) => {
 
 const getChat = async (req, res) => {
   try {
-    const docs = await Chat.find({}).select('channel content username').lean().exec();
+    const docs = await Chat.find({}).select('channel content username createdDate').lean().exec();
+    console.log(docs);
     return res.json({ chat: docs });
   } catch (err) {
     console.log(err);
@@ -26,13 +27,19 @@ const saveChat = async (req, res) => {
     content: req.body.content,
     owner: req.session.account._id,
     username: req.session.account.username,
+    createdDate: Date.now,
   };
 
   try {
     const newChat = new Chat(chatData);
     await newChat.save();
     return res.status(201).json(
-      { channel: newChat.channel, content: newChat.content, username: newChat.username },
+      {
+        channel: newChat.channel,
+        content: newChat.content,
+        username: newChat.username,
+        createdDate: newChat.createdDate,
+      },
     );
   } catch (err) {
     console.log(err);

@@ -66,7 +66,8 @@ const ChatMessage = (props) => {
     const chatMsg = props.chat.map(msg => {
         if (msg.channel === channelSelect.value) {
             return (
-                <div key={msg._id}><strong>{msg.username}</strong> - {msg.content}</div>
+                //<div key={msg._id}><strong>{msg.username}</strong> {msg.date}<br />{msg.content}</div>
+                <div key={msg._id}><strong>{msg.username}</strong> <font color="gray">{msg.createdDate}</font><br />{msg.content}</div>
             );
         }
 

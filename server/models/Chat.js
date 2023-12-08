@@ -28,6 +28,7 @@ ChatSchema.statics.toAPI = (doc) => ({
   channel: doc.channel,
   content: doc.content,
   username: doc.username,
+  createdDate: doc.createdDate,
 });
 
 const ChatModel = mongoose.model('Chat', ChatSchema);

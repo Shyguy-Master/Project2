@@ -21,8 +21,6 @@ const saveChat = async (req, res) => {
     return res.status(400).json({ error: 'No channel!' });
   }
 
-  console.log(req.body);//
-
   const chatData = {
     channel: req.body.channel,
     content: req.body.content,

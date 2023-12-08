@@ -19,11 +19,12 @@
         <input type="submit" />
     </form>
 
-    <div id="messages"></div>
-
     <form id="deleteForm">
-        <input id="deleteButton" type="button" action="/deleteChat" method="DELETE" value="Clear Channel Chat" className="deleteChatButton" />
+        <input id="clearButton" type="button" action="/clearChat" method="DELETE" value="Clear Channel Chat" className="deleteChatButton" />
+        <input id="deleteButton" type="button" action="/deleteChat" method="DELETE" value="Clear My Messages" className="deleteMsgButton" />
     </form>
+
+    <div id="messages"></div>
 
     <div id="domoMessage" class='hidden'>
         <img id="speech" src="/assets/img/speech.png" alt="speech box"/>

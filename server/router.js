@@ -18,7 +18,8 @@ const router = (app) => {
   app.post('/saveChat', mid.requiresLogin, controllers.Chat.saveChat);
 
   // app.delete('/deleteDomo', mid.requiresLogin, controllers.Domo.deleteDomo);//Remove
-  app.delete('/deleteChat', mid.requiresLogin, controllers.Chat.deleteAllChats);
+  app.delete('/clearChat', mid.requiresLogin, controllers.Chat.deleteAllChats);
+  app.delete('/clearMessages', mid.requiresLogin, controllers.Chat.deleteMyChats);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

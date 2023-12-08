@@ -21,24 +21,32 @@ const handleEditBox = () => {
     });
 };
 
-const handleDeleteForm = () => {
+const handleDeleteForms = () => {
+    const clearButton = document.getElementById('clearButton');
     const deleteButton = document.getElementById('deleteButton');
-    const channelSelectVal = document.getElementById('channelSelect').value;
+
+    clearButton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const channelSelectVal = document.getElementById('channelSelect').value;
+
+        helper.sendClearChat("/clearChat", { channel: channelSelectVal }, loadChatFromServer);
+
+        return false;
+    });
 
     deleteButton.addEventListener('click', (e) => {
         e.preventDefault();
 
-        helper.sendDeleteChat("/deleteChat", { channel: channelSelectVal }, loadChatFromServer);
+        const channelSelectVal = document.getElementById('channelSelect').value;
+
+        helper.sendDeleteChats("/clearMessages", { channel: channelSelectVal }, loadChatFromServer);
 
         return false;
     });
 };
 
 const displayMessage = async (content) => {
-    // const messageDiv = document.createElement('div');
-    // messageDiv.innerText = content;
-    // document.querySelector('.chatList').appendChild(messageDiv);
-
     const channel = document.getElementById('channelSelect').value;
 
     helper.sendPostChat("/saveChat", {channel, content}, loadChatFromServer);
@@ -58,7 +66,7 @@ const ChatMessage = (props) => {
     const chatMsg = props.chat.map(msg => {
         if (msg.channel === channelSelect.value) {
             return (
-                <div key={msg._id}>{msg.username} - {msg.content}</div>
+                <div key={msg._id}><strong>{msg.username}</strong> - {msg.content}</div>
             );
         }
 
@@ -77,7 +85,6 @@ const handleChannelSelect = () => {
     const messages = document.getElementById('messages');
 
     channelSelect.addEventListener('change', () => {
-        //messages.innerHTML = '<div class=\"chatList\"></div>';
         socket.emit('room change', channelSelect.value);
         loadChatFromServer();
     });
@@ -91,7 +98,7 @@ const loadChatFromServer = async () => {
 
 const init = () => {
     handleEditBox();
-    handleDeleteForm();
+    handleDeleteForms();
 
     loadChatFromServer();
 

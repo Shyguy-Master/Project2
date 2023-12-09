@@ -8,6 +8,9 @@ const ChatSchema = new mongoose.Schema({
   content: {
     type: String,
   },
+  pictureTag: {
+    type: String,
+  },
   owner: {
     type: mongoose.Schema.ObjectId,
     required: true,
@@ -27,6 +30,7 @@ const ChatSchema = new mongoose.Schema({
 ChatSchema.statics.toAPI = (doc) => ({
   channel: doc.channel,
   content: doc.content,
+  pictureTag: doc.pictureTag,
   username: doc.username,
   createdDate: doc.createdDate,
 });

@@ -56,9 +56,33 @@ const signup = async (req, res) => {
   }
 };
 
+const donate = (req, res) => {
+  try {
+    // console.log(req.session.account.donated);
+    // req.session.account.donated = true;
+    return res.json({ donated: true });
+  } catch (err) {
+    console.log(err);
+    return res.statue(500).json({ error: 'An error occured when trying to donate! ' });
+  }
+};
+
+const resetDonate = (req, res) => {
+  try {
+    // console.log(req.session.account.donated);
+    // req.session.account.donated = false;
+    return res.json({ donated: false });
+  } catch (err) {
+    console.log(err);
+    return res.statue(500).json({ error: 'An error occured when trying to undonate! ' });
+  }
+};
+
 module.exports = {
   loginPage,
   login,
   logout,
   signup,
+  donate,
+  resetDonate,
 };

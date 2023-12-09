@@ -2,37 +2,51 @@
 <head>
     <meta charset="UTF-8">
     <title>Disharmony</title>
-    <link rel="shortcut icon" href="/assets/img/favicon.png"/>
+    {{!-- <link rel="shortcut icon" href="/assets/img/favicon.png"/> --}}
     <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
 </head>
 <body>
-    <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-        <div class="navlink"><a href="/logout">Log out</a></div>
+    <nav>
+        {{!-- <a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a> --}}
+        <div class="navlink">
+            <a href="/logout">Log out</a>
+            <input id="donateButton" type="button" action="/donate" method="POST" value="Donate" className="donateButton" />
+            <input id="donateResetButton" type="button" action="/resetDonate" method="POST" value="Reset Donation" className="donateResetButton" />
+        </div>
     </nav>
 
-    <form id="editForm">
-        <input id="editBox" type="text" />
-        <select name="channel" id="channelSelect">
-            <option value="general">General</option>
-            <option value="memes">Memes</option>
-        </select>
-        <input type="submit" />
-    </form>
+    <div id="chatArea">
+        <form id="editForm">
+            <input id="editBox" type="text" />
+            <select name="channel" id="channelSelect">
+                <option value="general">General</option>
+                <option value="memes">Memes</option>
+            </select>
+            <input type="submit" />
+        </form>
 
-    <form id="deleteForm">
-        <input id="clearButton" type="button" action="/clearChat" method="DELETE" value="Clear Channel Chat" className="deleteChatButton" />
-        <input id="deleteButton" type="button" action="/deleteChat" method="DELETE" value="Clear My Messages" className="deleteMsgButton" />
-    </form>
+        <form ref='uploadForm' id='uploadForm' action='/uploadFile' method='POST' encType="multipart/form-data">
+            <input id="fileButton" type="file" name="sampleFile" disabled />
+            <input id="uploadButton" type='submit' value='Upload Image' disabled />
+        </form> 
 
-    <div id="messages"></div>
+        <form id="deleteForm">
+            <input id="clearButton" type="button" action="/clearChat" method="DELETE" value="Clear Channel Chat" className="deleteChatButton" />
+            <input id="deleteButton" type="button" action="/deleteChat" method="DELETE" value="Clear My Messages" className="deleteMsgButton" />
+        </form>
 
-    <div id="domoMessage" class='hidden'>
-        <img id="speech" src="/assets/img/speech.png" alt="speech box"/>
-        <h3><span id="errorMessage"></span></h3>
-        <img id="domo" src="assets/img/domo.png" alt="domo"/>
+        
+
+        <div id="messages"></div>
+
+        <div id="domoMessage" class='hidden'>
+            <img id="speech" src="/assets/img/speech.png" alt="speech box"/>
+            <h3><span id="errorMessage"></span></h3>
+            <img id="domo" src="assets/img/domo.png" alt="domo"/>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/assets/clientBundle.js"></script>
     </div>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/assets/clientBundle.js"></script>
 </body>
 </html>

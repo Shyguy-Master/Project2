@@ -4,6 +4,27 @@ const ReactDOM = require('react-dom');
 
 const socket = io();
 
+const handleDonateButton = () => {
+    const donateButton = document.getElementById('donateButton');
+    const donateResetButton = document.getElementById('donateResetButton');
+
+    donateButton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        helper.sendDonate("/donate", {}, updateFileButtons);
+
+        return false;
+    });
+
+    donateResetButton.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        helper.sendDonateReset("/resetDonate", {}, updateFileButtons);
+
+        return false;
+    });
+};
+
 const handleEditBox = () => {
     const editForm = document.getElementById('editForm');
     const editBox = document.getElementById('editBox');
@@ -15,6 +36,19 @@ const handleEditBox = () => {
             socket.emit('chat message', editBox.value);
             editBox.value = '';
         }
+
+        return false;
+    });
+};
+
+const handleUploadButton = () => {
+    const uploadForm = document.getElementById('uploadForm');
+
+    uploadForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        //console.log("So far so good");//
+        helper.sendFileUpload("/uploadFile", { fileData: e.target }, displayMessageWithPicture);
 
         return false;
     });
@@ -47,9 +81,16 @@ const handleDeleteForms = () => {
 
 const displayMessage = async (content) => {
     const channel = document.getElementById('channelSelect').value;
-
-    //helper.sendPostChat("/saveChat", {channel, content}, loadChatFromServer);
+    
     helper.sendPostChat("/saveChat", { channel: channel, content: content }, loadChatFromServer);
+
+    return false;
+};
+
+const displayMessageWithPicture = async (result) => {
+    const channel = document.getElementById('channelSelect').value;
+
+    helper.sendPostChat("/saveChat", { channel: channel, content: "", pictureTag: result.fileId }, loadChatFromServer);
 
     return false;
 };
@@ -65,9 +106,23 @@ const ChatMessage = (props) => {
 
     const chatMsg = props.chat.map(msg => {
         if (msg.channel === channelSelect.value) {
-            return (
-                <div key={msg._id}><strong>{msg.username}</strong> <font color="gray">{msg.createdDate}</font><br />{msg.content}</div>
-            );
+            if (!msg.pictureTag) {
+                return (
+                    <div key={msg._id} id="messageLine">
+                        <strong>{msg.username}</strong> <font color="gray">{msg.createdDate}</font><br />
+                        {msg.content}
+                    </div>
+                );
+            }
+            else {
+                return (
+                    <div key={msg._id} id="messageLine">
+                        <strong>{msg.username}</strong> <font color="gray">{msg.createdDate}</font><br />
+                        {msg.content}<br />
+                        <img src={`/retrieveFile?_id=${msg.pictureTag}`} />
+                    </div>
+                );
+            }
         }
 
         return (
@@ -96,8 +151,22 @@ const loadChatFromServer = async () => {
     ReactDOM.render(<ChatMessage chat={data.chat} />, document.getElementById('messages'));
 };
 
+const updateFileButtons = (results) => {
+    if (results.donated) {
+        document.getElementById('fileButton').toggleAttribute('disabled', false);
+        document.getElementById('uploadButton').toggleAttribute('disabled', false);
+    }
+    else {
+        document.getElementById('fileButton').toggleAttribute('disabled', true);
+        document.getElementById('uploadButton').toggleAttribute('disabled', true);
+    }
+};
+
 const init = () => {
+    handleDonateButton();
+
     handleEditBox();
+    handleUploadButton();
     handleDeleteForms();
 
     loadChatFromServer();

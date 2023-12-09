@@ -17,7 +17,8 @@ html, body {
 nav {
     width: 100%;
     height: 50px;
-    background-color: #55acee;
+    /* background-color: #55acee; */
+    background-color: #4b0082;
 }
 
 nav:nth-child(1) {
@@ -38,16 +39,18 @@ nav:nth-child(1) {
     text-decoration: none;
     padding: 5px;
     border-radius: 4px;
-    background-color: #55acee;
+    /* background-color: #55acee; */
+    background-color: #4b0082;
     transition: background-color 0.4s ease;
 }
 
 .navlink a:hover {
     transition: background-color 0.8s ease;
-    background-color: #66bdff;
+    /* background-color: #66bdff; */
+    background-color: #6307a7;
 }
 
-.domoForm {
+/* .domoForm {
     border: 2px solid #338acc;
     height: 35px;
     width: 1000px;
@@ -88,9 +91,9 @@ nav:nth-child(1) {
 .makeDomoSubmit:hover {
     transition: background-color 0.4s ease;
     background-color: #338acc;
-}
+} */
 
-.mainForm {
+/* .mainForm {
     height: 300px;
     width: 350px;
     margin: 0 auto;
@@ -118,9 +121,9 @@ nav:nth-child(1) {
     margin-top: 14px;
     font-size: 1.2em;
     width: 100px;
-    background-color: #55acee;
+    background-color: #4b0082;
     border-radius: 2px;
-    border-color: #66acee;
+    background-color: #6307a7;
     padding: 3px 0px;
     color: white;
     text-decoration: none;
@@ -132,7 +135,7 @@ nav:nth-child(1) {
 
 .formSubmit:hover {
     transition: background-color 0.4s ease;
-    background-color: #338acc;
+    background-color: #6307a7;
 }
 
 #user, #pass, #pass2 {
@@ -144,8 +147,8 @@ nav:nth-child(1) {
 
 #user:focus, #pass:focus, #pass2:focus {
     outline: none;
-    box-shadow: 0px 0px 1px 1px #55acee;
-}
+    box-shadow: 0px 0px 1px 1px #4b0082;
+} */
 
 .hidden {
     display: none;
@@ -181,7 +184,60 @@ nav:nth-child(1) {
     font-style: italic;
 }
 
-#domo {
+body {
+    background-color: #bc94d9;
+}
+
+#chatArea {
+    width: 50%;
+    min-width: 400px;
+    /* border: 2px solid #55acee; */
+    border-radius: 4px;
+    margin: 0 auto;
+    /* margin-top: 100px; */
+    margin-top: 10px;
+    /* background-color: #bc94d9; */
+    padding-top: 10px;
+    background-color: whitesmoke;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "edit upload delete"
+        "chat chat chat";
+}
+
+#editForm {
+    grid-area: edit;
+    text-align: center;
+}
+
+#uploadForm {
+    grid-area: upload;
+    text-align: center;
+}
+
+#deleteForm {
+    grid-area: delete;
+    text-align: center;
+}
+
+#messages {
+    grid-area: chat;
+}
+
+#messageLine {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    border-radius: 4px;
+    padding: 10px;
+    min-height: 40px;
+    overflow: hidden;
+}
+
+/* #domo {
     z-index: 225;
     margin-top: -20px;
     margin-left: 135px;
@@ -305,4 +361,4 @@ h3.domoGender {
 
 .domo:last-child {
     margin-bottom:10px;
-}
+} */

@@ -7,7 +7,6 @@ const socket = io();
 const handleEditBox = () => {
     const editForm = document.getElementById('editForm');
     const editBox = document.getElementById('editBox');
-    //const channelSelect = document.getElementById('channelSelect');
 
     editForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -49,7 +48,8 @@ const handleDeleteForms = () => {
 const displayMessage = async (content) => {
     const channel = document.getElementById('channelSelect').value;
 
-    helper.sendPostChat("/saveChat", {channel, content}, loadChatFromServer);
+    //helper.sendPostChat("/saveChat", {channel, content}, loadChatFromServer);
+    helper.sendPostChat("/saveChat", { channel: channel, content: content }, loadChatFromServer);
 
     return false;
 };
@@ -66,7 +66,6 @@ const ChatMessage = (props) => {
     const chatMsg = props.chat.map(msg => {
         if (msg.channel === channelSelect.value) {
             return (
-                //<div key={msg._id}><strong>{msg.username}</strong> {msg.date}<br />{msg.content}</div>
                 <div key={msg._id}><strong>{msg.username}</strong> <font color="gray">{msg.createdDate}</font><br />{msg.content}</div>
             );
         }

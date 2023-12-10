@@ -11,6 +11,7 @@ const router = (app) => {
 
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
 
+  app.get('/getDonate', mid.requiresLogin, controllers.Account.getDonate);
   app.post('/donate', mid.requiresLogin, controllers.Account.donate);
   app.post('/resetDonate', mid.requiresLogin, controllers.Account.resetDonate);
 

@@ -152,6 +152,9 @@ const sendFileUpload = async (url, data, handler) => {
     if (handler) {
         handler(result);
     }
+    else {
+        return result.fileId;
+    }
 };
 
 const sendClearChat = async (url, data, handler) => {

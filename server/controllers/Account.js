@@ -56,25 +56,29 @@ const signup = async (req, res) => {
   }
 };
 
+const getDonate = (req, res) => {
+  return res.json({ donated: req.session.account.donated });
+};
+
 const donate = (req, res) => {
   try {
-    // console.log(req.session.account.donated);
-    // req.session.account.donated = true;
-    return res.json({ donated: true });
+    // console.log(req.session.account.donated);//
+    req.session.account.donated = true;
+    return res.json({ donated: req.session.account.donated });
   } catch (err) {
     console.log(err);
-    return res.statue(500).json({ error: 'An error occured when trying to donate! ' });
+    return res.statue(500).json({ error: 'An error occured when trying to donate!' });
   }
 };
 
 const resetDonate = (req, res) => {
   try {
-    // console.log(req.session.account.donated);
-    // req.session.account.donated = false;
-    return res.json({ donated: false });
+    // console.log(req.session.account.donated);//
+    req.session.account.donated = false;
+    return res.json({ donated: req.session.account.donated });
   } catch (err) {
     console.log(err);
-    return res.statue(500).json({ error: 'An error occured when trying to undonate! ' });
+    return res.statue(500).json({ error: 'An error occured when trying to undonate!' });
   }
 };
 
@@ -83,6 +87,7 @@ module.exports = {
   login,
   logout,
   signup,
+  getDonate,
   donate,
   resetDonate,
 };

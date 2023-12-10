@@ -28,30 +28,42 @@ const handleDonateButton = () => {
 const handleEditBox = () => {
     const editForm = document.getElementById('editForm');
     const editBox = document.getElementById('editBox');
+    const uploadForm = document.getElementById('uploadForm');
+    const fileButton = document.getElementById('fileButton');
 
-    editForm.addEventListener('submit', (e) => {
+    editForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         if (editBox.value) {
-            socket.emit('chat message', editBox.value);
+            if (fileButton.files.length !== 0) {
+                const fileId = await helper.sendFileUpload("/uploadFile", { fileData: uploadForm });
+                socket.emit('chat pic message', editBox.value, fileId);
+            }
+            else {
+                socket.emit('chat message', editBox.value);
+            }
             editBox.value = '';
         }
+        else if (fileButton.files.length !== 0) {
+            helper.sendFileUpload("/uploadFile", { fileData: uploadForm }, displayPicture);
+        }
+
+        // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file 
 
         return false;
     });
 };
 
 const handleUploadButton = () => {
-    const uploadForm = document.getElementById('uploadForm');
+    // const uploadForm = document.getElementById('uploadForm');
 
-    uploadForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    // uploadForm.addEventListener('submit', (e) => {
+    //     e.preventDefault();
 
-        //console.log("So far so good");//
-        helper.sendFileUpload("/uploadFile", { fileData: e.target }, displayMessageWithPicture);
+    //     helper.sendFileUpload("/uploadFile", { fileData: e.target }, displayPicture);
 
-        return false;
-    });
+    //     return false;
+    // });
 };
 
 const handleDeleteForms = () => {
@@ -87,7 +99,15 @@ const displayMessage = async (content) => {
     return false;
 };
 
-const displayMessageWithPicture = async (result) => {
+const displayMessageWithPicture = async (content, result) => {
+    const channel = document.getElementById('channelSelect').value;
+
+    helper.sendPostChat("/saveChat", { channel: channel, content: content, pictureTag: result }, loadChatFromServer);
+
+    return false;
+};
+
+const displayPicture = async (result) => {
     const channel = document.getElementById('channelSelect').value;
 
     helper.sendPostChat("/saveChat", { channel: channel, content: "", pictureTag: result.fileId }, loadChatFromServer);
@@ -151,14 +171,20 @@ const loadChatFromServer = async () => {
     ReactDOM.render(<ChatMessage chat={data.chat} />, document.getElementById('messages'));
 };
 
+const updateFileButtonsFromServer = async () => {
+    const response = await fetch('/getDonate');
+    const data = await response.json();
+    updateFileButtons(data);
+};
+
 const updateFileButtons = (results) => {
     if (results.donated) {
         document.getElementById('fileButton').toggleAttribute('disabled', false);
-        document.getElementById('uploadButton').toggleAttribute('disabled', false);
+        //document.getElementById('uploadButton').toggleAttribute('disabled', false);
     }
     else {
         document.getElementById('fileButton').toggleAttribute('disabled', true);
-        document.getElementById('uploadButton').toggleAttribute('disabled', true);
+        //document.getElementById('uploadButton').toggleAttribute('disabled', true);
     }
 };
 
@@ -166,12 +192,14 @@ const init = () => {
     handleDonateButton();
 
     handleEditBox();
-    handleUploadButton();
+    //handleUploadButton();
     handleDeleteForms();
 
     loadChatFromServer();
+    updateFileButtonsFromServer();
 
     socket.on('chat message', displayMessage);
+    socket.on('chat pic message', displayMessageWithPicture);
     handleChannelSelect();
 };
 

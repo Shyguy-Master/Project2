@@ -12,6 +12,15 @@ const handleChatMessage = (socket, msg) => {
   });
 };
 
+const handleChatMessageWithPic = (socket, msg, picId) => {
+  socket.rooms.forEach((room) => {
+    if (room === socket.id) {
+      return;
+    }
+    io.to(room).emit('chat pic message', msg, picId);
+  });
+};
+
 const handleRoomChange = (socket, roomName) => {
   socket.rooms.forEach((room) => {
     if (room === socket.id) {
@@ -35,6 +44,7 @@ const socketSetup = (app) => {
     });
 
     socket.on('chat message', (msg) => handleChatMessage(socket, msg));
+    socket.on('chat pic message', (msg, picId) => handleChatMessageWithPic(socket, msg, picId));
     socket.on('room change', (room) => handleRoomChange(socket, room));
   });
 

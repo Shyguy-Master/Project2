@@ -116,7 +116,12 @@ const displayPicture = async (result) => {
 };
 
 const displayWelcomeMessage = async () => {
-    // --CODE HERE-- 
+    const response = await fetch('/getUsername');
+    const data = await response.json();
+
+    helper.sendPostChat("/saveChat", { channel: "welcome", content: `------ ${data.username} joined ------`, username: "Welcome" }, loadChatFromServer);
+
+    return false;
 };
 
 const ChatMessage = (props) => {
@@ -168,6 +173,14 @@ const handleChannelSelect = () => {
     channelSelect.addEventListener('change', () => {
         socket.emit('room change', channelSelect.value);
         loadChatFromServer();
+        if (channelSelect.value === "welcome") {
+            document.getElementById('editBox').toggleAttribute('disabled', true);
+            document.getElementById('editSubmit').toggleAttribute('disabled', true);
+        }
+        else {
+            document.getElementById('editBox').toggleAttribute('disabled', false);
+            document.getElementById('editSubmit').toggleAttribute('disabled', false);
+        }
     });
 };
 

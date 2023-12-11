@@ -3,6 +3,7 @@ const mid = require('./middleware');
 
 const router = (app) => {
   app.get('/getChat', mid.requiresLogin, controllers.Chat.getChat);
+  app.get('/getUsername', mid.requiresLogin, controllers.Account.getUsername);
 
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);

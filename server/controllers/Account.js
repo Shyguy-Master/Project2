@@ -80,6 +80,15 @@ const resetDonate = (req, res) => {
   }
 };
 
+const getUsername = (req, res) => {
+  try {
+    return res.json({ username: req.session.account.username });
+  } catch (err) {
+    console.log(err);
+    return res.statue(500).json({ error: 'An error occured when trying to get username!' });
+  }
+};
+
 module.exports = {
   loginPage,
   login,
@@ -88,4 +97,5 @@ module.exports = {
   getDonate,
   donate,
   resetDonate,
+  getUsername,
 };

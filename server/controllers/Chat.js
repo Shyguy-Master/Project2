@@ -21,16 +21,36 @@ const saveChat = async (req, res) => {
     return res.status(400).json({ error: 'No channel!' });
   }
 
-  const chatData = {
-    channel: req.body.channel,
-    content: req.body.content,
-    pictureTag: req.body.pictureTag,
-    owner: req.session.account._id,
-    username: req.session.account.username,
-    createdDate: Date.now(),
-  };
+  // const chatData = {
+  //   channel: req.body.channel,
+  //   content: req.body.content,
+  //   pictureTag: req.body.pictureTag,
+  //   owner: req.session.account._id,
+  //   username: req.session.account.username,
+  //   createdDate: Date.now(),
+  // };
 
-  // let chatData = {};
+  let chatData = {};
+
+  if (!req.body.username) {
+    chatData = {
+      channel: req.body.channel,
+      content: req.body.content,
+      pictureTag: req.body.pictureTag,
+      owner: req.session.account._id,
+      username: req.session.account.username,
+      createdDate: Date.now(),
+    };
+  } else {
+    chatData = {
+      channel: req.body.channel,
+      content: req.body.content,
+      pictureTag: req.body.pictureTag,
+      owner: req.session.account._id,
+      username: req.body.username,
+      createdDate: Date.now(),
+    };
+  }
 
   // if (req.body.pictureTag) {
   //   chatData = {

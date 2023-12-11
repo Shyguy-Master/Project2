@@ -56,9 +56,7 @@ const signup = async (req, res) => {
   }
 };
 
-const getDonate = (req, res) => {
-  return res.json({ donated: req.session.account.donated });
-};
+const getDonate = (req, res) => res.json({ donated: req.session.account.donated });
 
 const donate = (req, res) => {
   try {

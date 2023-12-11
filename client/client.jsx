@@ -38,6 +38,7 @@ const handleEditBox = () => {
             if (fileButton.files.length !== 0) {
                 const fileId = await helper.sendFileUpload("/uploadFile", { fileData: uploadForm });
                 socket.emit('chat pic message', editBox.value, fileId);
+                uploadForm.reset();
             }
             else {
                 socket.emit('chat message', editBox.value);
@@ -46,9 +47,8 @@ const handleEditBox = () => {
         }
         else if (fileButton.files.length !== 0) {
             helper.sendFileUpload("/uploadFile", { fileData: uploadForm }, displayPicture);
+            uploadForm.reset();
         }
-
-        // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file 
 
         return false;
     });

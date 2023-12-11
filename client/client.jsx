@@ -129,11 +129,13 @@ const ChatMessage = (props) => {
     }
 
     const chatMsg = props.chat.map(msg => {
+        const msgDate = new Date(msg.createdDate);
+        const timeStamp = msgDate.toLocaleTimeString();
         if (msg.channel === channelSelect.value) {
             if (!msg.pictureTag) {
                 return (
                     <div key={msg._id} id="messageLine">
-                        <strong>{msg.username}</strong> <font color="gray">{msg.createdDate}</font><br />
+                        <strong>{msg.username}</strong> <font color="gray">{timeStamp}</font><br />
                         {msg.content}
                     </div>
                 );
@@ -141,7 +143,7 @@ const ChatMessage = (props) => {
             else {
                 return (
                     <div key={msg._id} id="messageLine">
-                        <strong>{msg.username}</strong> <font color="gray">{msg.createdDate}</font><br />
+                        <strong>{msg.username}</strong> <font color="gray">{timeStamp}</font><br />
                         {msg.content}<br />
                         <img src={`/retrieveFile?_id=${msg.pictureTag}`} />
                     </div>

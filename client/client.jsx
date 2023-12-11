@@ -115,6 +115,10 @@ const displayPicture = async (result) => {
     return false;
 };
 
+const displayWelcomeMessage = async () => {
+    // --CODE HERE-- 
+};
+
 const ChatMessage = (props) => {
     const channelSelect = document.getElementById('channelSelect');
 
@@ -188,6 +192,11 @@ const updateFileButtons = (results) => {
     }
 };
 
+const createWelcomeChat = async () => {
+    socket.emit('welcome message');
+    //ReactDOM.render(<ChatMessage chat={} />, document.getElementById('messages'));
+};
+
 const init = () => {
     handleDonateButton();
 
@@ -196,10 +205,12 @@ const init = () => {
     handleDeleteForms();
 
     loadChatFromServer();
+    createWelcomeChat();
     updateFileButtonsFromServer();
 
     socket.on('chat message', displayMessage);
     socket.on('chat pic message', displayMessageWithPicture);
+    socket.on('welcome message', displayWelcomeMessage);
     handleChannelSelect();
 };
 

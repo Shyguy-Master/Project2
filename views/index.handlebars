@@ -9,7 +9,7 @@
         <div class="navlink">
             <a href="/logout">Log out</a>
             <input id="donateButton" type="button" action="/donate" method="POST" value="Subscribe" className="donateButton" />
-            <input id="donateResetButton" type="button" action="/resetDonate" method="POST" value="Unsubscribe" className="donateResetButton" />
+            <input id="donateResetButton" type="button" action="/resetDonate" method="POST" value="Unsubscribe" className="donateResetButton" disabled />
         </div>
     </nav>
 
@@ -36,11 +36,11 @@
 
         <div id="messages"></div>
 
-        <div id="domoMessage" class='hidden'>
+        {{!-- <div id="domoMessage" class='hidden'>
             <img id="speech" src="/assets/img/speech.png" alt="speech box"/>
             <h3><span id="errorMessage"></span></h3>
             <img id="domo" src="assets/img/domo.png" alt="domo"/>
-        </div>
+        </div> --}}
 
         <script src="/socket.io/socket.io.js"></script>
         <script src="/assets/clientBundle.js"></script>

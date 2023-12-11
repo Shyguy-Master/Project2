@@ -168,7 +168,7 @@ const ChatMessage = (props) => {
 
 const handleChannelSelect = () => {
     const channelSelect = document.getElementById('channelSelect');
-    const messages = document.getElementById('messages');
+    // const messages = document.getElementById('messages');
 
     channelSelect.addEventListener('change', () => {
         socket.emit('room change', channelSelect.value);
@@ -176,10 +176,13 @@ const handleChannelSelect = () => {
         if (channelSelect.value === "welcome") {
             document.getElementById('editBox').toggleAttribute('disabled', true);
             document.getElementById('editSubmit').toggleAttribute('disabled', true);
+            document.getElementById('fileButton').toggleAttribute('disabled', true);
+            uploadForm.reset();
         }
         else {
             document.getElementById('editBox').toggleAttribute('disabled', false);
             document.getElementById('editSubmit').toggleAttribute('disabled', false);
+            updateFileButtonsFromServer();
         }
     });
 };
@@ -197,13 +200,26 @@ const updateFileButtonsFromServer = async () => {
 };
 
 const updateFileButtons = (results) => {
+    const channelSelect = document.getElementById('channelSelect');
     if (results.donated) {
-        document.getElementById('fileButton').toggleAttribute('disabled', false);
-        //document.getElementById('uploadButton').toggleAttribute('disabled', false);
+        document.getElementById('donateButton').toggleAttribute('disabled', true);
+        document.getElementById('donateResetButton').toggleAttribute('disabled', false);
+        if (channelSelect.value === "welcome") {
+            document.getElementById('fileButton').toggleAttribute('disabled', true);
+            //document.getElementById('uploadButton').toggleAttribute('disabled', false);
+            uploadForm.reset();
+        }
+        else {
+            document.getElementById('fileButton').toggleAttribute('disabled', false);
+            //document.getElementById('uploadButton').toggleAttribute('disabled', false);
+        }
     }
     else {
+        document.getElementById('donateButton').toggleAttribute('disabled', false);
+        document.getElementById('donateResetButton').toggleAttribute('disabled', true);
         document.getElementById('fileButton').toggleAttribute('disabled', true);
-        //document.getElementById('uploadButton').toggleAttribute('disabled', true);
+        //document.getElementById('uploadButton').toggleAttribute('disabled', false);
+        uploadForm.reset();
     }
 };
 

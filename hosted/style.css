@@ -50,6 +50,22 @@ nav:nth-child(1) {
     background-color: #6307a7;
 }
 
+.navlink input, .navlink input:hover, .navlink input:active {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+    border-radius: 4px;
+    /* background-color: #55acee; */
+    background-color: #4b0082;
+    transition: background-color 0.4s ease;
+}
+
+.navlink input:hover {
+    transition: background-color 0.8s ease;
+    /* background-color: #66bdff; */
+    background-color: #6307a7;
+}
+
 /* .domoForm {
     border: 2px solid #338acc;
     height: 35px;
@@ -154,7 +170,7 @@ nav:nth-child(1) {
     display: none;
 }
 
-#domoMessage {
+/* #domoMessage {
     top: 250px;
     width: 250px;
     height: 650px;
@@ -182,7 +198,7 @@ nav:nth-child(1) {
     font-weight: bold;
     color: red;
     font-style: italic;
-}
+} */
 
 body {
     background-color: #bc94d9;

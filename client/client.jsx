@@ -54,18 +54,6 @@ const handleEditBox = () => {
     });
 };
 
-const handleUploadButton = () => {
-    // const uploadForm = document.getElementById('uploadForm');
-
-    // uploadForm.addEventListener('submit', (e) => {
-    //     e.preventDefault();
-
-    //     helper.sendFileUpload("/uploadFile", { fileData: e.target }, displayPicture);
-
-    //     return false;
-    // });
-};
-
 const handleDeleteForms = () => {
     const clearButton = document.getElementById('clearButton');
     const deleteButton = document.getElementById('deleteButton');
@@ -168,7 +156,6 @@ const ChatMessage = (props) => {
 
 const handleChannelSelect = () => {
     const channelSelect = document.getElementById('channelSelect');
-    // const messages = document.getElementById('messages');
 
     channelSelect.addEventListener('change', () => {
         socket.emit('room change', channelSelect.value);
@@ -206,33 +193,28 @@ const updateFileButtons = (results) => {
         document.getElementById('donateResetButton').toggleAttribute('disabled', false);
         if (channelSelect.value === "welcome") {
             document.getElementById('fileButton').toggleAttribute('disabled', true);
-            //document.getElementById('uploadButton').toggleAttribute('disabled', false);
             uploadForm.reset();
         }
         else {
             document.getElementById('fileButton').toggleAttribute('disabled', false);
-            //document.getElementById('uploadButton').toggleAttribute('disabled', false);
         }
     }
     else {
         document.getElementById('donateButton').toggleAttribute('disabled', false);
         document.getElementById('donateResetButton').toggleAttribute('disabled', true);
         document.getElementById('fileButton').toggleAttribute('disabled', true);
-        //document.getElementById('uploadButton').toggleAttribute('disabled', false);
         uploadForm.reset();
     }
 };
 
 const createWelcomeChat = async () => {
     socket.emit('welcome message');
-    //ReactDOM.render(<ChatMessage chat={} />, document.getElementById('messages'));
 };
 
 const init = () => {
     handleDonateButton();
 
     handleEditBox();
-    //handleUploadButton();
     handleDeleteForms();
 
     loadChatFromServer();

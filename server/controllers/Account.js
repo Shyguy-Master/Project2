@@ -60,7 +60,6 @@ const getDonate = (req, res) => res.json({ donated: req.session.account.donated 
 
 const donate = (req, res) => {
   try {
-    // console.log(req.session.account.donated);//
     req.session.account.donated = true;
     return res.json({ donated: req.session.account.donated });
   } catch (err) {
@@ -71,7 +70,6 @@ const donate = (req, res) => {
 
 const resetDonate = (req, res) => {
   try {
-    // console.log(req.session.account.donated);//
     req.session.account.donated = false;
     return res.json({ donated: req.session.account.donated });
   } catch (err) {

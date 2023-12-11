@@ -237,6 +237,10 @@ body {
     overflow: hidden;
 }
 
+#messageLine img {
+    max-width: 30em;
+}
+
 /* #domo {
     z-index: 225;
     margin-top: -20px;

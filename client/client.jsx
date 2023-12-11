@@ -120,7 +120,7 @@ const ChatMessage = (props) => {
 
     if (props.chat.length === 0) {
         return (
-            <div className="chatList"></div>
+            <div className="chatList"><hr/></div>
         );
     }
 
@@ -151,7 +151,7 @@ const ChatMessage = (props) => {
     });
     
     return (
-        <div className="chatList">{chatMsg}</div>
+        <div className="chatList"><hr/>{chatMsg}</div>
     );
 };
 

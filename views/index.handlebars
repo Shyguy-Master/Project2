@@ -22,6 +22,7 @@
         <form id="editForm">
             <input id="editBox" type="text" />
             <select name="channel" id="channelSelect">
+                <option value="welcome">Welcome</option>
                 <option value="general">General</option>
                 <option value="memes">Memes</option>
             </select>
@@ -29,11 +30,9 @@
         </form>
 
         <form id="deleteForm">
-            <input id="clearButton" type="button" action="/clearChat" method="DELETE" value="Clear Channel Chat" className="deleteChatButton" />
+            <input id="clearButton" type="button" action="/clearChat" method="DELETE" value="Clear Channel" className="deleteChatButton" />
             <input id="deleteButton" type="button" action="/deleteChat" method="DELETE" value="Clear My Messages" className="deleteMsgButton" />
         </form>
-
-        
 
         <div id="messages"></div>
 
